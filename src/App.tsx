@@ -4,9 +4,9 @@ import ProtectedRoute from "./components/layout/ProtecTedRoute";
 function App() {
   return (
     <ProtectedRoute>
-      <MainLayout />;
+      <MainLayout />
     </ProtectedRoute>
-  ); 
+  );
 }
 
 export default App;
