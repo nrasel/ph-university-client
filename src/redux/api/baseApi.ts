@@ -6,9 +6,9 @@ import {
   FetchArgs,
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
+import { toast } from "sonner";
 import { logOut, setUser } from "../features/auth/authSlice";
 import { RootState } from "../store";
-import { toast } from "sonner";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:5000/api/v1",
@@ -29,9 +29,9 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 > = async (args, api, extraOptions): Promise<any> => {
   let result = await baseQuery(args, api, extraOptions);
 
-
-  if(result?.error?.status===404){
-    toast.error("User not found!")
+  if (result?.error?.status === 404) {
+    const errorData = result.error.data as { message: string };
+    toast.error(errorData.message);
   }
   if (result?.error?.status === 401) {
     //* Send refresh token
