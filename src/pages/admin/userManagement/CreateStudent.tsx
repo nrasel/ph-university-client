@@ -1,5 +1,6 @@
-import { Button, Col, Divider, Row } from "antd";
-import { FieldValues, SubmitHandler } from "react-hook-form";
+import { Button, Col, Divider, Form, Input, Row } from "antd";
+import { Controller, FieldValues, SubmitHandler } from "react-hook-form";
+import { toast } from "sonner";
 import {
   bloodGroupOptions,
   genderOptions,
@@ -9,10 +10,11 @@ import PHForm from "../../../components/form/PHForm";
 import PHInput from "../../../components/form/PHInput";
 import PHSelect from "../../../components/form/PHSelect";
 import {
-  useAddAcademicSemesterMutation,
+  useGetAllDepartmentQuery,
   useGetAllSemestersQuery,
 } from "../../../redux/features/admin/academicManagement.api";
 import { useAddStudentMutation } from "../../../redux/features/admin/userManagement.api";
+import { TResponse } from "../../../types";
 
 const studentDummyData = {
   password: "student123",
@@ -56,7 +58,7 @@ const studentDefaultValues = {
     middleName: "student",
     lastName: "Rahsel",
   },
-  email: "student2@gmail.com",
+  // email: "student2@gmail.com",
   gender: "male",
   // dateOfBirth: "2000-01-15",
   contactNo: "12345",
@@ -78,6 +80,8 @@ const studentDefaultValues = {
     contactNo: "1122334455",
     address: "789 Maple Street, Springfield",
   },
+  admissionSemester: "676da0438e455073c7b01f22",
+  academicDepartment: "676d9f738e455073c7b01f1c",
 };
 
 const CreateStudent = () => {
@@ -87,24 +91,42 @@ const CreateStudent = () => {
   const { data: sData, isLoading: sIsLoading } =
     useGetAllSemestersQuery(undefined);
   const { data: dData, isLoading: dIsLoading } =
-    useAddAcademicSemesterMutation(undefined);
+    useGetAllDepartmentQuery(undefined);
 
   const semesterOptions = sData?.data?.map((item) => ({
     value: item._id,
     label: `${item.name} ${item.year}`,
   }));
-  const departmentOptions = dData?.data?.map((item) => ({
+  const departmentOptions = dData?.data?.map((item: any) => ({
     value: item._id,
     label: item.name,
   }));
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const toastId = toast.loading("Creating.....");
     const studentData = {
       password: "student123",
       student: data,
     };
+    console.log(data.image);
     const formData = new FormData();
     formData.append("data", JSON.stringify(studentData));
+    formData.append("file", data.image);
+
+    try {
+      const res = (await addStudent(formData)) as TResponse<any>;
+      console.log(res);
+      if (res.error) {
+        toast.error(res.error.data.message, { id: toastId });
+      } else {
+        toast.success("Student created successfully!", {
+          id: toastId,
+        });
+        // navigate to academic semester page
+      }
+    } catch (error) {
+      toast.error("Something went wrong!", { id: toastId });
+    }
     addStudent(formData);
 
     //! This is for development
@@ -138,11 +160,27 @@ const CreateStudent = () => {
                 label="Date of Birth"
               />
             </Col>
+
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
               <PHSelect
                 options={bloodGroupOptions}
                 name="bloodGroup"
                 label="Blood Group"
+              />
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <Controller
+                name="image"
+                render={({ field: { onChange, value, ...field } }) => (
+                  <Form.Item label="Picture">
+                    <Input
+                      type="file"
+                      value={value?.fileName}
+                      {...field}
+                      onChange={(e) => onChange(e.target.files?.[0])}
+                    />
+                  </Form.Item>
+                )}
               />
             </Col>
           </Row>

@@ -11,7 +11,7 @@ import {
   useGetAllAcademicFacultyQuery,
 } from "../../../redux/features/admin/academicManagement.api";
 import { academicDepartmentSchema } from "../../../schemas/academicManagement.schema";
-import { TQueryParam } from "../../../types";
+import { TQueryParam, TResponse } from "../../../types";
 
 const CreateAcademicDepartment = () => {
   const [params] = useState<TQueryParam[] | undefined>([]);
@@ -29,24 +29,24 @@ const CreateAcademicDepartment = () => {
     console.log(data);
     const toastId = toast.loading("Creating.....");
 
-    // const departmentData = {
-    //   name: data.name,
-    //   academicFaculty: data.academicFaculty,
-    // };
+    const departmentData = {
+      name: data.name,
+      academicFaculty: data.academicFaculty,
+    };
 
-    // try {
-    //   const res = (await addDepartment(departmentData)) as TResponse<any>;
-    //   if (res.error) {
-    //     toast.error(res.error.data.message, { id: toastId });
-    //   } else {
-    //     toast.success("Academic Department created successfully!", {
-    //       id: toastId,
-    //     });
-    //     // navigate to academic semester page
-    //   }
-    // } catch (error) {
-    //   toast.error("Something went wrong!", { id: toastId });
-    // }
+    try {
+      const res = (await addDepartment(departmentData)) as TResponse<any>;
+      if (res.error) {
+        toast.error(res.error.data.message, { id: toastId });
+      } else {
+        toast.success("Academic Department created successfully!", {
+          id: toastId,
+        });
+        // navigate to academic semester page
+      }
+    } catch (error) {
+      toast.error("Something went wrong!", { id: toastId });
+    }
   };
 
   return (
