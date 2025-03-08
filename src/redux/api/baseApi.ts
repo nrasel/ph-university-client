@@ -17,7 +17,6 @@ const baseQuery = fetchBaseQuery({
     const token = (getState() as RootState).auth.token;
     if (token) {
       headers.set("authorization", `${token}`);
-      
     }
     return headers;
   },
@@ -59,5 +58,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
+  tagTypes: ["semester", "courses"],
   endpoints: () => ({}),
 });

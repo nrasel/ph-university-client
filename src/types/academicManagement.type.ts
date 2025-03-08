@@ -5,7 +5,11 @@ export type TAcademicSemester = {
   code: string;
   startMonth: string;
   endMonth: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 };
+
 export type TAcademicDepartment = {
   _id: string;
   name: string;

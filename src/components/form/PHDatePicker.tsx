@@ -1,15 +1,14 @@
 import { DatePicker, Form } from "antd";
 import { Controller } from "react-hook-form";
 
-type TIDatePickerProps = {
-  type: string;
+type TDatePickerProps = {
   name: string;
   label?: string;
 };
 
-const PHDatePicker = ({ name, label }: TIDatePickerProps) => {
+const PHDatePicker = ({ name, label }: TDatePickerProps) => {
   return (
-    <div>
+    <div style={{ marginBottom: "20px" }}>
       <Controller
         name={name}
         render={({ field }) => (

@@ -1,9 +1,9 @@
-import { TQueryParam, TResponseRedux } from "../../../types";
+import { TQueryParam, TResponseRedux, TSemester } from "../../../types";
 import { baseApi } from "../../api/baseApi";
 
-const userManagement = baseApi.injectEndpoints({
+const courseManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllStudents: builder.query({
+    getAllRegisteredSemesters: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
         if (args) {
@@ -12,12 +12,13 @@ const userManagement = baseApi.injectEndpoints({
           });
         }
         return {
-          url: "/students",
+          url: "/semester-registration",
           method: "GET",
           params: params,
         };
       },
-      transformResponse: (response: TResponseRedux<any>) => {
+      providesTags: ["semester"],
+      transformResponse: (response: TResponseRedux<TSemester[]>) => {
         //29-8 number video
         console.log("Inside redux", response);
         return {
@@ -26,49 +27,62 @@ const userManagement = baseApi.injectEndpoints({
         };
       },
     }),
-    addStudent: builder.mutation({
+    addRegisterSemester: builder.mutation({
       query: (data) => ({
-        url: "/users/create-student",
+        url: "/semester-registration/create-semester-registration",
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["semester"],
+    }),
+    updateRegisterSemester: builder.mutation({
+      query: (args) => ({
+        url: `/semester-registration/${args.id}`,
+        method: "PATCH",
+        body: args.data,
+      }),
+      invalidatesTags: ["semester"],
     }),
 
-    getAllFaculties: builder.query({
+    getAllCourses: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
+
         if (args) {
           args.forEach((item: TQueryParam) => {
             params.append(item.name, item.value as string);
           });
         }
+
         return {
-          url: "/faculties",
+          url: "/courses",
           method: "GET",
           params: params,
         };
       },
+      providesTags: ["courses"],
       transformResponse: (response: TResponseRedux<any>) => {
-        //29-8 number video
-        console.log("Inside redux", response);
         return {
           data: response.data,
           meta: response.meta,
         };
       },
     }),
-    addFaculties: builder.mutation({
-      query: (args) => ({
-        url: `/courses/${args.courseId}/assign-faculties`,
-        method: "PUT",
-        body: args.data,
+    addCourse: builder.mutation({
+      query: (data) => ({
+        url: `/courses/create-course`,
+        method: "POST",
+        body: data,
       }),
+      invalidatesTags: ["courses"],
     }),
   }),
 });
+
 export const {
-  useAddStudentMutation,
-  useGetAllStudentsQuery,
-  useGetAllFacultiesQuery,
-  useAddFacultiesMutation,
-} = userManagement;
+  useAddRegisterSemesterMutation,
+  useGetAllRegisteredSemestersQuery,
+  useUpdateRegisterSemesterMutation,
+  useGetAllCoursesQuery,
+  useAddCourseMutation,
+} = courseManagementApi;

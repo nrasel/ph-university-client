@@ -16,40 +16,40 @@ import {
 import { useAddStudentMutation } from "../../../redux/features/admin/userManagement.api";
 import { TResponse } from "../../../types";
 
-const studentDummyData = {
-  password: "student123",
-  student: {
-    name: {
-      firstName: "student1",
-      middleName: "student",
-      lastName: "Rahsel",
-    },
-    email: "student2@gmail.com",
-    gender: "male",
-    dateOfBirth: "2000-01-15",
-    contactNo: "12345",
-    emergencyContactNo: "0987654321",
-    bloodGroup: "O+",
-    presentAddress: "123 Main Street, Springfield",
-    permanentAddress: "456 Elm Street, Springfield",
-    guardian: {
-      fatherName: "Richard Doe",
-      fatherOccupation: "Engineer",
-      fatherContactNo: "1234512345",
-      motherName: "Jane Doe",
-      motherOccupation: "Teacher",
-      motherContactNo: "6789067890",
-    },
-    localGauardian: {
-      name: "Uncle Bob",
-      occupation: "Businessman",
-      contactNo: "1122334455",
-      address: "789 Maple Street, Springfield",
-    },
-    admissionSemester: "676d9ff98e455073c7b01f1f",
-    academicDepartment: "676d9f738e455073c7b01f1c",
-  },
-};
+// const studentDummyData = {
+//   password: "student123",
+//   student: {
+//     name: {
+//       firstName: "student1",
+//       middleName: "student",
+//       lastName: "Rahsel",
+//     },
+//     email: "student2@gmail.com",
+//     gender: "male",
+//     dateOfBirth: "2000-01-15",
+//     contactNo: "12345",
+//     emergencyContactNo: "0987654321",
+//     bloodGroup: "O+",
+//     presentAddress: "123 Main Street, Springfield",
+//     permanentAddress: "456 Elm Street, Springfield",
+//     guardian: {
+//       fatherName: "Richard Doe",
+//       fatherOccupation: "Engineer",
+//       fatherContactNo: "1234512345",
+//       motherName: "Jane Doe",
+//       motherOccupation: "Teacher",
+//       motherContactNo: "6789067890",
+//     },
+//     localGauardian: {
+//       name: "Uncle Bob",
+//       occupation: "Businessman",
+//       contactNo: "1122334455",
+//       address: "789 Maple Street, Springfield",
+//     },
+//     admissionSemester: "676d9ff98e455073c7b01f1f",
+//     academicDepartment: "676d9f738e455073c7b01f1c",
+//   },
+// };
 
 // this is only for development
 const studentDefaultValues = {
@@ -154,11 +154,7 @@ const CreateStudent = () => {
             </Col>
 
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
-              <PHDatePicker
-                type="text"
-                name="dateOfBirth"
-                label="Date of Birth"
-              />
+              <PHDatePicker name="dateOfBirth" label="Date of Birth" />
             </Col>
 
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
