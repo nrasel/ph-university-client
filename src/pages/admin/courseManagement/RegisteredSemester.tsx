@@ -4,7 +4,7 @@ import moment from "moment";
 import { useState } from "react";
 import {
   useGetAllRegisteredSemestersQuery,
-  useUpdateRegisterSemesterMutation,
+  useUpdateRegisteredSemesterMutation,
 } from "../../../redux/features/admin/courseManagement";
 import { TSemester } from "../../../types";
 
@@ -28,10 +28,10 @@ const items = [
 const RegisteredSemester = () => {
   // const [params, setParams] = useState<TQueryParam[] | undefined>([]);
   const [semesterId, setSemesterId] = useState("");
-  console.log(semesterId);
+
   const { data: semesterData, isFetching } =
     useGetAllRegisteredSemestersQuery(undefined);
-  const [updateSemesterStatus] = useUpdateRegisterSemesterMutation();
+  const [updateSemesterStatus] = useUpdateRegisteredSemesterMutation();
 
   const tableData = semesterData?.data?.map(
     ({ _id, academicSemester, startDate, endDate, status }) => ({

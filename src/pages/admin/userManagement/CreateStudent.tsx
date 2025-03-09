@@ -10,7 +10,7 @@ import PHForm from "../../../components/form/PHForm";
 import PHInput from "../../../components/form/PHInput";
 import PHSelect from "../../../components/form/PHSelect";
 import {
-  useGetAllDepartmentQuery,
+  useGetAcademicDepartmentsQuery,
   useGetAllSemestersQuery,
 } from "../../../redux/features/admin/academicManagement.api";
 import { useAddStudentMutation } from "../../../redux/features/admin/userManagement.api";
@@ -91,7 +91,7 @@ const CreateStudent = () => {
   const { data: sData, isLoading: sIsLoading } =
     useGetAllSemestersQuery(undefined);
   const { data: dData, isLoading: dIsLoading } =
-    useGetAllDepartmentQuery(undefined);
+    useGetAcademicDepartmentsQuery(undefined);
 
   const semesterOptions = sData?.data?.map((item) => ({
     value: item._id,

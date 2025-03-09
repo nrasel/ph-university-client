@@ -13,15 +13,10 @@ import { verifyToken } from "../utils/verifyToken";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  // const { register, handleSubmit } = useForm({
-  //   defaultValues: {
-  //     id: "A-0001",
-  //     password: "admin123",
-  //   },
-  // });
+
   const defaultValues = {
     id: "A-0001",
-    password: "admin123",
+    password: "admin1234",
   };
 
   const [login] = useLoginMutation();
@@ -38,7 +33,12 @@ const Login = () => {
 
       dispatch(setUser({ user: user, token: res.data.accessToken }));
       toast.success("Logged in successfully!", { id: toastId, duration: 2000 });
-      navigate(`/${user?.role}/dashboard`);
+
+      if (res.data.needsPasswordChange) {
+        navigate(`/change-password`);
+      } else {
+        navigate(`/${user?.role}/dashboard`);
+      }
     } catch (error) {
       toast.error("Something went wrong", { id: toastId, duration: 2000 });
     }

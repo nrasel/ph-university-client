@@ -7,15 +7,15 @@ import PHForm from "../../../components/form/PHForm";
 import PHInput from "../../../components/form/PHInput";
 import PHSelect from "../../../components/form/PHSelect";
 import { useGetAllSemestersQuery } from "../../../redux/features/admin/academicManagement.api";
-import { useAddRegisterSemesterMutation } from "../../../redux/features/admin/courseManagement";
+import { useAddRegisteredSemesterMutation } from "../../../redux/features/admin/courseManagement";
 import { TResponse } from "../../../types";
 
 const SemesterRegistration = () => {
-  const [addSemester] = useAddRegisterSemesterMutation();
+  const [addSemester] = useAddRegisteredSemesterMutation();
   const { data: academicSemester } = useGetAllSemestersQuery([
     { name: "sort", value: "year" },
   ]);
-  console.log(academicSemester);
+
 
   const academicSemesterOptions = academicSemester?.data?.map((item) => ({
     value: item._id,

@@ -1,7 +1,7 @@
 import type { TableColumnsType, TableProps } from "antd";
 import { Button, Table } from "antd";
 import { useState } from "react";
-import { useGetAllAcademicFacultyQuery } from "../../../redux/features/admin/academicManagement.api";
+import { useGetAcademicFacultiesQuery } from "../../../redux/features/admin/academicManagement.api";
 import { TQueryParam } from "../../../types";
 import { TAcademicFaculty } from "../../../types/academicManagement.type";
 
@@ -10,7 +10,7 @@ export type TTableData = Pick<TAcademicFaculty, "name">;
 const AcademicSemester = () => {
   const [params, setParams] = useState<TQueryParam[] | undefined>([]);
   const { data: academicFacultyData, isFetching } =
-    useGetAllAcademicFacultyQuery(params);
+    useGetAcademicFacultiesQuery(params);
 
   const columns: TableColumnsType<TTableData> = [
     {

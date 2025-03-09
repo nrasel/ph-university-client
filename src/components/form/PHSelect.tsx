@@ -21,7 +21,7 @@ const PHSelect = ({ label, name, options, disabled, mode }: TPHSelectProps) => {
     control,
     name,
   });
-  console.log(inputValue);
+
   return (
     <Controller
       name={name}

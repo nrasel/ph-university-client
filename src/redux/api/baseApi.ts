@@ -33,9 +33,13 @@ const baseQueryWithRefreshToken: BaseQueryFn<
     const errorData = result.error.data as { message: string };
     toast.error(errorData.message);
   }
+  if (result?.error?.status === 403) {
+    const errorData = result.error.data as { message: string };
+    toast.error(errorData.message);
+    console.log(errorData);
+  }
   if (result?.error?.status === 401) {
     //* Send refresh token
-
     const res = await fetch("http://localhost:5000/api/v1/auth/refresh-token", {
       method: "POST",
       credentials: "include",
@@ -44,7 +48,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
     const data = await res.json();
 
     if (data?.data?.accessToken) {
-      const user = (api.getState() as RootState).auth.user;
+      const user = (api.getState() as RootState).auth?.user;
       api.dispatch(setUser({ user, token: data.data.accessToken }));
 
       result = await baseQuery(args, api, extraOptions);
@@ -58,6 +62,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes: ["semester", "courses"],
+  tagTypes: ["semester", "courses", "OfferedCourse"],
   endpoints: () => ({}),
 });

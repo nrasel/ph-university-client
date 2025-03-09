@@ -8,14 +8,14 @@ import PHInput from "../../../components/form/PHInput";
 import PHSelect from "../../../components/form/PHSelect";
 import {
   useAddAcademicDepartmentMutation,
-  useGetAllAcademicFacultyQuery,
+  useGetAcademicFacultiesQuery,
 } from "../../../redux/features/admin/academicManagement.api";
 import { academicDepartmentSchema } from "../../../schemas/academicManagement.schema";
 import { TQueryParam, TResponse } from "../../../types";
 
 const CreateAcademicDepartment = () => {
   const [params] = useState<TQueryParam[] | undefined>([]);
-  const { data: academicFacultyData } = useGetAllAcademicFacultyQuery(params);
+  const { data: academicFacultyData } = useGetAcademicFacultiesQuery(params);
   const [addDepartment] = useAddAcademicDepartmentMutation();
 
   console.log(academicFacultyData);

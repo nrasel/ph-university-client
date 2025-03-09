@@ -7,11 +7,8 @@ import {
   useAddFacultiesMutation,
   useGetAllFacultiesQuery,
 } from "../../../redux/features/admin/userManagement.api";
-// import { useGetAllFacultiesQuery } from "../../../redux/features/admin/userManagement.api";
 
 const Courses = () => {
-  // const [params, setParams] = useState<TQueryParam[] | undefined>(undefined);
-
   const { data: courses, isFetching } = useGetAllCoursesQuery(undefined);
 
   const tableData = courses?.data?.map(({ _id, title, prefix, code }: any) => ({

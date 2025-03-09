@@ -1,9 +1,10 @@
 import type { TableColumnsType, TableProps } from "antd";
 import { Button, Pagination, Space, Table } from "antd";
 import { useState } from "react";
-import { useGetAllStudentsQuery } from "../../../redux/features/admin/userManagement.api";
-import { TQueryParam, TSTudent } from "../../../types";
 import { Link } from "react-router-dom";
+import { useGetAllStudentsQuery } from "../../../redux/features/admin/userManagement.api";
+import { TQueryParam } from "../../../types";
+import { TSTudent } from "../../../types/userManagement.type";
 
 export type TTableData = Pick<
   TSTudent,
@@ -13,11 +14,7 @@ export type TTableData = Pick<
 const StudentData = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
   const [page, setPage] = useState(1);
-  const {
-    data: studentData,
-    isLoading,
-    isFetching,
-  } = useGetAllStudentsQuery([
+  const { data: studentData, isFetching } = useGetAllStudentsQuery([
     { name: "limit", value: 3 },
     { name: "page", value: page },
     { name: "sort", value: "id" },

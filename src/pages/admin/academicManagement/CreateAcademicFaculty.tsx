@@ -13,7 +13,6 @@ const CreateAcademicFacfulty = () => {
   console.log(data, error);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
     const toastId = toast.loading("Creating.....");
 
     const facultyData = {
